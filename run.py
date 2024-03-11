@@ -87,20 +87,23 @@ def main_v1():
         print('> "' + file + '"')
 
     for file in files:
-        name, seed, num = split_filename(file)
+        try:
+            name, seed, num = split_filename(file)
 
-        rename = name + ' ' + seed + ' ' + num + '.csv'
-        os.rename('input/' + file, 'input/' + rename)
-        file = rename
+            rename = name + ' ' + seed + ' ' + num + '.csv'
+            os.rename('input/' + file, 'input/' + rename)
+            file = rename
 
-        data = get_file_data(file)
-        if is_data_successful(data):
+            data = get_file_data(file)
+            if is_data_successful(data):
 
-            move_file_to_success(file)
-            print(cl.Fore.GREEN + seed + '[' + num + ']' + cl.Fore.RESET)
-        else:
-            move_file_to_failure(file)
-            print(cl.Fore.RED + seed + '[' + num + ']' + cl.Fore.RESET)
+                move_file_to_success(file)
+                print(cl.Fore.GREEN + seed + '[' + num + ']' + cl.Fore.RESET)
+            else:
+                move_file_to_failure(file)
+                print(cl.Fore.RED + seed + '[' + num + ']' + cl.Fore.RESET)
+        except:
+            print(cl.Fore.RED + 'Error processing file: ' + file + cl.Fore.RESET)
 
 
 if __name__ == '__main__':
